@@ -200,6 +200,8 @@ img {
   align-content: center;
 }
 
+/* хуй видалиш */
+
 .line-left {
   position: absolute;
   left: 0.01vw;
@@ -214,7 +216,7 @@ img {
 .image-disgust {
   display: flex;
   position: absolute;
-  top: 20%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 40%;
