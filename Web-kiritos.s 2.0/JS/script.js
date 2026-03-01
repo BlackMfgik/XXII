@@ -95,7 +95,7 @@ function raf(time) {
 requestAnimationFrame(raf);
 
 document.addEventListener("DOMContentLoaded", () => {
-  const loxImage = document.querySelector(".image-lox");
+  const loxImage = document.querySelector(".image-disgust");
 
   if (loxImage) {
     loxImage.addEventListener("mouseenter", () => {

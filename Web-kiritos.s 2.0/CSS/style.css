@@ -11,22 +11,9 @@
   --text-color: #ffffff;
   --hover-color: #616161;
 }
+
 html {
   scrollbar-gutter: stable;
-}
-.stop-scrolling {
-  height: 100vh !important;
-  overflow: hidden !important;
-  position: fixed;
-  width: 100%;
-}
-
-body {
-  font-family: "Benzin-Semibold", sans-serif;
-  background: var(--bg-color);
-  display: flex;
-  justify-content: center;
-  overflow-x: hidden;
 }
 
 @font-face {
@@ -35,6 +22,30 @@ body {
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+}
+
+.stop-scrolling {
+  height: 100vh !important;
+  overflow: hidden !important;
+  position: fixed;
+  width: 100%;
+}
+.webm {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  height: auto;
+}
+
+body {
+  font-family: "Benzin-Semibold", sans-serif;
+  background: var(--bg-color);
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
 }
 
 .nav-bar {
@@ -179,8 +190,9 @@ img {
 }
 .star {
   position: absolute;
-  top: 49.16vw;
-  left: -4.4vw;
+  top: 111.3vh;
+  left: 2.217%;
+  transform: translate(-50%, -50%);
   width: 13.2vw;
   height: auto;
   z-index: 4;
@@ -200,14 +212,24 @@ img {
   align-content: center;
 }
 
-/* хуй видалиш */
-
 .line-left {
   position: absolute;
   left: 0.01vw;
   background-color: var(--bg-color);
   margin: 6.3vw 0vw 0.02vw 2.15vw;
   height: 100vw;
+  width: 0.1vw;
+  clip-path: polygon(50% 0%, 100% 20%, 100% 80%, 50% 100%, 0% 80%, 0% 20%);
+  z-index: 3;
+}
+
+.line-right {
+  position: absolute;
+  top: 20%;
+  right: 0.01vw;
+  background-color: var(--bg-color);
+  /* margin: 6vw; */
+  height: 60vw;
   width: 0.1vw;
   clip-path: polygon(50% 0%, 100% 20%, 100% 80%, 50% 100%, 0% 80%, 0% 20%);
   z-index: 3;
@@ -262,14 +284,4 @@ img {
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   opacity: 0.1;
-}
-
-.webm {
-  display: flex;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 85%;
-  height: auto;
 }
