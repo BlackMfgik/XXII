@@ -124,3 +124,72 @@ document.addEventListener("DOMContentLoaded", () => {
     body.classList.remove("stop-scrolling");
   }, 2500);
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const sideNav = document.querySelector(".scroll-spy");
+  const starBtns = document.querySelectorAll(".scroll-spy-star");
+  const secondImage = document.querySelector(".second-image");
+  const thirdImage = document.querySelector(".third-image");
+
+  if (!sideNav || !secondImage || !thirdImage) return;
+
+  function updateSideNav() {
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+
+    const startTrigger = secondImage.offsetTop - windowHeight / 2;
+    const endTrigger =
+      thirdImage.offsetTop + thirdImage.offsetHeight - windowHeight / 2;
+
+    if (scrollY >= startTrigger && scrollY <= endTrigger) {
+      sideNav.classList.add("visible");
+    } else {
+      sideNav.classList.remove("visible");
+    }
+
+    const currentPoint = scrollY + windowHeight / 2;
+
+    const vPage = secondImage.offsetHeight / 3;
+    const positions = [
+      secondImage.offsetTop,
+      secondImage.offsetTop + vPage * 2,
+      thirdImage.offsetTop,
+    ];
+
+    let activeIndex = -1;
+    positions.forEach((pos, index) => {
+      if (currentPoint >= pos - 50) {
+        activeIndex = index;
+      }
+    });
+
+    starBtns.forEach((btn, index) => {
+      btn.classList.toggle("active", index === activeIndex);
+    });
+  }
+
+  starBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const idx = btn.getAttribute("data-index");
+      const vPage = secondImage.offsetHeight / 3;
+      const targetPos = [
+        secondImage.offsetTop,
+        secondImage.offsetTop + vPage * 2,
+        thirdImage.offsetTop,
+      ];
+
+      btn.classList.add("rotating");
+      setTimeout(() => {
+        btn.classList.remove("rotating");
+      }, 600);
+
+      window.scrollTo({
+        top: targetPos[idx],
+        behavior: "smooth",
+      });
+    });
+  });
+
+  window.addEventListener("scroll", updateSideNav);
+  updateSideNav(); // Запуск при старті
+});
