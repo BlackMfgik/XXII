@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function initLenis() {
   lenis = new Lenis({
-    // ✅ Зберігаємо в глобальну змінну
     duration: 3,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     wheelMultiplier: 1,
@@ -26,9 +25,6 @@ function initLenis() {
   requestAnimationFrame(raf);
 }
 
-// ============================================
-// 1. SCROLL SPY ФУНКЦІЯ
-// ============================================
 function initScrollSpy() {
   const sideNav = document.querySelector(".scroll-spy");
   const starBtns = document.querySelectorAll(".scroll-spy-star");
@@ -85,14 +81,11 @@ function initScrollSpy() {
       setTimeout(() => {
         btn.classList.remove("rotating");
       }, 600);
-
-      // ✅ ВИПРАВКА: Використовуємо Lenis замість window.scrollTo
       if (lenis) {
         lenis.scrollTo(targetPos[idx], {
           duration: 1.5,
         });
       } else {
-        // ✅ Fallback, якщо Lenis не завантажився
         window.scrollTo({
           top: targetPos[idx],
           behavior: "smooth",
@@ -106,22 +99,19 @@ function initScrollSpy() {
   updateSideNav();
 }
 
-// ============================================
-// 2. MARQUEE АНІМАЦІЯ
-// ============================================
 function initMarquees() {
   const second = document.querySelector(".second-image");
   if (!second) return;
 
   const configs = [
-    { relY: 0.1, rotate: 4, repeat: 25, speed: 18, reverse: false },
+    { relY: 0.1, rotate: 4, repeat: 25, speed: 19, reverse: false },
     { relY: 0.62, rotate: 8, repeat: 25, speed: 22, reverse: true },
     { relY: 0.45, rotate: -6, repeat: 25, speed: 28, reverse: false },
     { relY: 0.3, rotate: 15, repeat: 25, speed: 24, reverse: true },
     { relY: 0.27, rotate: -9, repeat: 25, speed: 20, reverse: false },
   ];
 
-  const baseText = " inc.xxii inc.xxii inc.xxii inc.xxii inc.xxii ";
+  const baseText = " inc.xxii ";
 
   function createMarquees() {
     document.querySelectorAll(".dyn-marquee").forEach((n) => n.remove());
@@ -146,6 +136,9 @@ function initMarquees() {
       content.style.animationDuration = `${c.speed}s`;
       content.style.animationTimingFunction = "linear";
       content.style.animationIterationCount = "infinite";
+      content.style.display = "inline-flex";
+      content.style.whiteSpace = "nowrap";
+      content.style.willChange = "transform";
 
       const textSpan = document.createElement("span");
       textSpan.textContent = baseText.repeat(c.repeat);
@@ -160,9 +153,6 @@ function initMarquees() {
   window.addEventListener("resize", createMarquees);
 }
 
-// ============================================
-// 3. IMAGE ANIMATION (MASCOT)
-// ============================================
 function initImageAnimation() {
   const loxImage = document.querySelector(".image-disgust");
 
@@ -179,9 +169,6 @@ function initImageAnimation() {
   }
 }
 
-// ============================================
-// 4. NAVBAR АНІМАЦІЯ
-// ============================================
 function initNavBar() {
   const body = document.body;
   const navBar = document.querySelector(".nav-bar");
@@ -196,9 +183,6 @@ function initNavBar() {
   }, 2500);
 }
 
-// ============================================
-// 5. LANGUAGE SWITCH
-// ============================================
 function initLanguageSwitch() {
   const langSwitch = document.getElementById("langSwitch");
   if (!langSwitch) return;

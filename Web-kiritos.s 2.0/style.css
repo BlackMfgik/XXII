@@ -315,19 +315,19 @@ img {
 }
 
 @keyframes scroll-left {
-  0% {
+  from {
     transform: translateX(0);
   }
-  100% {
+  to {
     transform: translateX(-50%);
   }
 }
 
 @keyframes scroll-right {
-  0% {
+  from {
     transform: translateX(-50%);
   }
-  100% {
+  to {
     transform: translateX(0);
   }
 }
@@ -363,10 +363,11 @@ img {
   z-index: 2;
 }
 
-.text-h1 {
-  display: flex;
+.text-about-me {
   position: absolute;
-  justify-items: center;
   top: 35%;
   margin: 4%;
+  font-size: 2rem;
+  mix-blend-mode: difference;
+  color: white;
 }
