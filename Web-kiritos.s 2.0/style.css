@@ -371,3 +371,21 @@ img {
   mix-blend-mode: difference;
   color: white;
 }
+
+.scramble-line {
+  min-height: 1.3em;
+  line-height: 1.4;
+}
+
+.scramble-center {
+  text-align: center;
+}
+
+.scramble-spacer {
+  min-height: 1.6em;
+}
+
+.dud {
+  color: #5a5a5a;
+  opacity: 0.7;
+}

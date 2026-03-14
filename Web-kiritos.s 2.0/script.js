@@ -1,4 +1,119 @@
-let lenis;
+class TextScramble {
+  constructor(el) {
+    this.el = el;
+    this.chars = "!<>-_\\/[]{}—=+*^?#________";
+    this.update = this.update.bind(this);
+  }
+
+  setText(newText) {
+    const oldText = this.el.innerText;
+    const length = Math.max(oldText.length, newText.length);
+    const promise = new Promise((resolve) => (this.resolve = resolve));
+    this.queue = [];
+    for (let i = 0; i < length; i++) {
+      const from = oldText[i] || "";
+      const to = newText[i] || "";
+      const start = Math.floor(Math.random() * 40);
+      const end = start + Math.floor(Math.random() * 40);
+      this.queue.push({ from, to, start, end });
+    }
+    cancelAnimationFrame(this.frameRequest);
+    this.frame = 0;
+    this.update();
+    return promise;
+  }
+
+  update() {
+    let output = "";
+    let complete = 0; 
+    for (let i = 0, n = this.queue.length; i < n; i++) {
+      let { from, to, start, end, char } = this.queue[i];
+      if (this.frame >= end) {
+        complete++;
+        output += to;
+      } else if (this.frame >= start) {
+        if (!char || Math.random() < 0.28) {
+          char = this.randomChar();
+          this.queue[i].char = char;
+        }
+        output += `<span class="dud">${char}</span>`;
+      } else {
+        output += from;
+      }
+    }
+    this.el.innerHTML = output;
+    if (complete === this.queue.length) {
+      this.resolve();
+    } else {
+      this.frameRequest = requestAnimationFrame(this.update);
+      this.frame++;
+    }
+  }
+
+  randomChar() {
+    return this.chars[Math.floor(Math.random() * this.chars.length)];
+  }
+}
+
+function initTextScramble() {
+  const container = document.querySelector(".text-about-me");
+  const trigger = document.querySelector(".image-disgust");
+  if (!container || !trigger) return;
+
+  const phrase = (text, center = false, gap = false) => ({ text, center, gap });
+
+  const phrases = [
+    phrase("Hey, guys and gals.", true),
+    phrase("This is Kirill, or more canonically Kiritos/Pryanik."),
+    phrase("And this is the portfolio website for my project called 22."),
+    phrase("I've been working in this field for over three years now,"),
+    phrase("and I'm not planning on stopping."),
+    phrase("My project is aimed at developing the underground scene"),
+    phrase("of music covers, car posters, and other visual services"),
+    phrase("for those looking for something unusual and unique."),
+    phrase("Feel free to make yourself at home on this page"),
+    phrase("and check out my work, listen to music, or order something."),
+    phrase("I am always happy to chat with anyone who writes to me."),
+    phrase("P.S. Don't forget to smile.", false, true),
+  ];
+  let triggered = false;
+
+  trigger.addEventListener("click", () => {
+    if (triggered) return;
+    triggered = true;
+    container.innerHTML = "";
+    runLines(container, phrases);
+  });
+}
+
+function runLines(container, phrases) {
+  let cumulativeDelay = 0;
+
+  phrases.forEach((phrase) => {
+    const { text, center, gap } = phrase;
+    const currentDelay = cumulativeDelay;
+
+    if (gap) {
+      setTimeout(() => {
+        const spacer = document.createElement("div");
+        spacer.className = "scramble-line scramble-spacer";
+        container.appendChild(spacer);
+      }, currentDelay);
+      cumulativeDelay += 50;
+    }
+
+    setTimeout(() => {
+      const line = document.createElement("div");
+      line.className = "scramble-line" + (center ? " scramble-center" : "");
+      container.appendChild(line);
+
+      const fx = new TextScramble(line);
+      fx.setText(text);
+    }, cumulativeDelay);
+
+    cumulativeDelay += text.length * 4;
+  });
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   initScrollSpy();
@@ -7,6 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initNavBar();
   initLanguageSwitch();
   initLenis();
+  initTextScramble();
 });
 
 function initLenis() {
@@ -104,14 +220,14 @@ function initMarquees() {
   if (!second) return;
 
   const configs = [
-    { relY: 0.1, rotate: 4, repeat: 25, speed: 19, reverse: false },
-    { relY: 0.62, rotate: 8, repeat: 25, speed: 22, reverse: true },
-    { relY: 0.45, rotate: -6, repeat: 25, speed: 28, reverse: false },
-    { relY: 0.3, rotate: 15, repeat: 25, speed: 24, reverse: true },
-    { relY: 0.27, rotate: -9, repeat: 25, speed: 20, reverse: false },
+    { relY: 0.1, rotate: 4, repeat: 6, speed: 49, reverse: false },
+    { relY: 0.62, rotate: 8, repeat: 6, speed: 48, reverse: true },
+    { relY: 0.45, rotate: -6, repeat: 6, speed: 44, reverse: false },
+    { relY: 0.3, rotate: 15, repeat: 6, speed: 44, reverse: true },
+    { relY: 0.27, rotate: -9, repeat: 6, speed: 40, reverse: false },
   ];
 
-  const baseText = " inc.xxii ";
+  const baseText = " inc.xxii inc.xxii inc.xxii inc.xxii inc.xxii ";
 
   function createMarquees() {
     document.querySelectorAll(".dyn-marquee").forEach((n) => n.remove());
