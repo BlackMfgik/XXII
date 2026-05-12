@@ -25,7 +25,7 @@ class TextScramble {
 
   update() {
     let output = "";
-    let complete = 0; 
+    let complete = 0;
     for (let i = 0, n = this.queue.length; i < n; i++) {
       let { from, to, start, end, char } = this.queue[i];
       if (this.frame >= end) {
