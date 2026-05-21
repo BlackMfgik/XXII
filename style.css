@@ -24,12 +24,12 @@ html {
   font-display: swap;
 }
 
-/* .stop-scrolling {
+.stop-scrolling {
   height: 100vh !important;
   overflow: hidden !important;
   position: fixed;
   width: 100%;
-} */
+}
 .webm-logo {
   display: flex;
   position: absolute;
